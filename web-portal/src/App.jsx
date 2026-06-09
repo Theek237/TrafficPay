@@ -50,12 +50,12 @@ function App() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="fixed inset-0 z-40 bg-[#050505]/95 backdrop-blur-3xl pt-24 px-6 md:hidden">
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="fixed inset-0 z-40 bg-[#050505]/95 backdrop-blur-3xl pt-24 px-6 md:hidden">
             <div className="flex flex-col gap-6 text-xl font-medium">
               <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
               <Link to="/lookup" onClick={() => setIsMenuOpen(false)}>Fine Lookup</Link>
             </div>
-          </motion.initial>
+          </motion.div>
         )}
       </AnimatePresence>
 
