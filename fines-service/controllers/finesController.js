@@ -96,3 +96,44 @@ exports.getFines = async (req, res, next) => {
     res.status(400).json({ success: false, message: err.message });
   }
 };
+
+// @desc      Update a fine
+// @route     PUT /api/v1/fines/:id
+// @access    Private (ADMIN)
+exports.updateFine = async (req, res, next) => {
+  try {
+    let fine = await Fine.findById(req.params.id);
+    if (!fine) {
+      return res.status(404).json({ success: false, message: 'Fine not found' });
+    }
+
+    fine = await Fine.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    }).populate('categoryId', 'code name')
+      .populate('districtId', 'name province')
+      .populate('officerId', 'fullName badgeNo');
+
+    res.status(200).json({ success: true, data: fine });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+};
+
+// @desc      Delete a fine
+// @route     DELETE /api/v1/fines/:id
+// @access    Private (ADMIN)
+exports.deleteFine = async (req, res, next) => {
+  try {
+    const fine = await Fine.findById(req.params.id);
+    if (!fine) {
+      return res.status(404).json({ success: false, message: 'Fine not found' });
+    }
+
+    await fine.deleteOne();
+
+    res.status(200).json({ success: true, data: {} });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+};
