@@ -1,24 +1,94 @@
-# Sri Lanka Traffic Fine System 🚦
+# 🚦 TrafficPay - Smart City Traffic Fine Management
 
-This is the main monorepo for the Sri Lanka Traffic Fine System, developed as a group project for the Software Architecture module (2026).
+<div align="center">
+  <p>A next-generation, microservice-based web portal for managing and processing smart-city traffic violations.</p>
+</div>
 
-## 📖 Project Overview
-Aligning with the Sri Lankan government's national policy of strengthening public services through digitalization, the Sri Lanka Police Department has identified the need to modernize traffic fine payments across the country. This system aims to eliminate inefficiencies in the traditional traffic fine settlement process and reduce the inconvenience faced by motorists.
+---
 
-## 🏗️ Repository Structure
-This repository follows a monorepo structure containing the following sub-projects:
+## 📖 Overview
 
-* **`backend/`**: Node.js and Express REST API handling the database and business logic.
-* **`mobile-app/`**: Flutter application for drivers to make on-the-spot fine payments.
-* **`web-portal/`**: React Single Page Application (SPA) for drivers to pay fines online later.
-* **`admin-portal/`**: React web portal for senior officials to monitor traffic fine collections nationwide.
+TrafficPay is a robust Software Architecture project designed to handle the secure lookup, management, and payment of traffic fines. Moving away from traditional monolithic architectures, TrafficPay is built on a highly scalable, decoupled **Microservices Architecture**, ensuring fault tolerance, independent scaling, and distinct domain boundaries.
 
+The user interface represents the cutting edge of modern web design, featuring an ultra-premium, responsive aesthetic powered by advanced animations, glassmorphism, and dynamic 3D visuals.
 
-## 🚀 Branching & Workflow Rules
-To ensure a smooth collaboration and prevent merge conflicts, all team members must follow these strict Git rules:
+---
 
-1.  **Main Branch:** The `main` branch is the final integration branch and is always deployable. Do not push code directly to `main`.
-2.  **Feature Branches:** Create a separate feature branch for your tasks.
-    * *Examples:* `feature/auth` (Member 1), `feature/fines` (Member 2), `feature/payments` (Member 3), `feature/admin` (Member 4).
-3.  **Final Merge:** All commits must be merged to the `main` branch via Pull Requests before the final evaluation.## Contributors
-- Theenuka Bandara
+## 🏗️ Architecture Design
+
+The backend ecosystem utilizes an API Gateway pattern to route client requests securely to dedicated, lightweight microservices.
+
+*   **API Gateway (Port 5005)**: The single point of entry for the frontend, handling CORS, logging, and proxy routing to internal services.
+*   **Authentication Service (Port 5001)**: Dedicated to user identity, RBAC (Role-Based Access Control), and issuing stateless JWTs.
+*   **Fines Service (Port 5002)**: Manages the core domain logic of issuing traffic tickets, scanning the database for violations, and calculating demerit points.
+*   **Payments Service (Port 5003)**: Securely processes fine payments, logs transaction histories, and interfaces with simulated SMS gateways.
+
+## 💻 Tech Stack
+
+### Frontend (Client)
+*   **Framework**: React 19 (Vite)
+*   **Styling**: Tailwind CSS v4
+*   **Animations**: Framer Motion
+*   **Icons**: Lucide React
+*   **Routing**: React Router DOM v7
+
+### Backend (Microservices)
+*   **Runtime**: Node.js
+*   **Framework**: Express.js
+*   **Database**: MongoDB Atlas (Cloud)
+*   **ODM**: Mongoose
+*   **Security**: bcryptjs, jsonwebtoken (JWT)
+*   **Routing**: http-proxy-middleware
+
+---
+
+## ✨ Key Features
+
+1.  **Immersive 3D UI:** A stunning, cinematic frontend interface featuring dynamic blur filters, floating animations, and high-contrast smart-city aesthetics.
+2.  **True Microservices:** Completely decoupled backend services ensuring high availability and domain-driven design.
+3.  **Live Cloud Database:** Integrated directly with MongoDB Atlas for persistent, cloud-based data storage.
+4.  **Secure Authentication:** JWT-based stateless authentication preventing unauthorized access to officer and admin routes.
+5.  **Real-Time Data Fetching:** Instantaneous fine lookups utilizing dynamic API Gateway routing.
+
+---
+
+## 🚀 Getting Started
+
+To run the entire microservices cluster locally:
+
+### 1. Start the Microservices
+Open separate terminal windows and start each service:
+
+```bash
+# Start API Gateway
+cd api-gateway
+node server.js
+
+# Start Auth Service
+cd auth-service
+node server.js
+
+# Start Fines Service
+cd fines-service
+node server.js
+
+# Start Payments Service
+cd payments-service
+node server.js
+```
+
+### 2. Start the Frontend Web Portal
+```bash
+cd web-portal
+npm install
+npm run dev
+```
+
+### 3. Access the Application
+Open your browser and navigate to: `http://localhost:5173`
+
+---
+
+<div align="center">
+  <i>Developed for Advanced Software Architecture</i>
+</div>
