@@ -34,6 +34,7 @@ function App() {
             <Link to="/" className="hover:text-white transition-colors">Home</Link>
             <Link to="/lookup" className="hover:text-white transition-colors">Fine Lookup</Link>
             <a href="#" className="hover:text-white transition-colors">Smart City Network</a>
+            <Link to="/admin/login" className="hover:text-white transition-colors">Admin Portal</Link>
             <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
               <span>System Operational</span>
@@ -62,9 +63,14 @@ function App() {
       {/* Routing with Page Transitions */}
       <main className="relative z-10 pt-20 min-h-screen flex flex-col">
         <AnimatePresence mode="wait">
+import Login from './pages/admin/Login';
+import Dashboard from './pages/admin/Dashboard';
+
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/lookup" element={<Lookup />} />
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
           </Routes>
         </AnimatePresence>
       </main>
