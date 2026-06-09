@@ -24,12 +24,12 @@ function App() {
       <nav className="fixed w-full z-50 bg-[#050505]/60 backdrop-blur-2xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center group-hover:scale-105 transition-transform shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-              <Shield className="w-5 h-5 text-white" />
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)] group-hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] transition-all overflow-hidden">
+              <img src="/logo.png" alt="TrafficPay Logo" className="w-full h-full object-cover" />
             </div>
-            <span className="text-xl font-bold tracking-tight">
-              TrafficPay<span className="text-amber-500">.</span>
-            </span>
+            <div>
+              <h1 className="text-2xl font-black tracking-tighter text-white">Traffic<span className="text-cyan-400">Pay</span></h1>
+            </div>
           </Link>
 
           {/* Desktop Links */}
