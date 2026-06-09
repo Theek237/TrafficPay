@@ -41,7 +41,7 @@ export default function Login() {
     <motion.div 
       initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.3 } }}
-      exit={{ opacity: 0, y: -10, filter: 'blur(5px)' }}
+      exit={{ opacity: 0, y: -10, filter: 'blur(5px)', transition: { duration: 0.05 } }}
       className="flex-grow flex items-center justify-center py-20 px-6 relative"
     >
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>

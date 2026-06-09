@@ -54,8 +54,8 @@ export default function Lookup() {
 
   const pageTransition = {
     initial: { opacity: 0, y: 10, scale: 0.99, filter: 'blur(5px)' },
-    animate: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 0.25, ease: 'easeOut' } },
-    exit: { opacity: 0, y: -10, scale: 0.99, filter: 'blur(5px)', transition: { duration: 0.15 } }
+    animate: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 0.2, ease: 'easeOut' } },
+    exit: { opacity: 0, y: -10, scale: 0.99, filter: 'blur(5px)', transition: { duration: 0.05 } }
   };
 
   return (

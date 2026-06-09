@@ -143,8 +143,8 @@ export default function Dashboard() {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
+      exit={{ opacity: 0, y: -10, transition: { duration: 0.05 } }}
       className="flex-grow flex flex-col py-10 px-6 max-w-7xl mx-auto w-full relative z-10"
     >
       <div className="flex justify-between items-end mb-10">
