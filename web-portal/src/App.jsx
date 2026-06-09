@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Search, CreditCard, CheckCircle, AlertCircle, ChevronRight, Activity } from 'lucide-react';
+import { Shield, Search, CreditCard, CheckCircle, AlertCircle, ChevronRight, Activity, Info } from 'lucide-react';
 
 const API_URL = 'http://localhost:5000/api/v1'; // Will be updated to gateway later
 
@@ -24,7 +24,7 @@ function App() {
     try {
       const res = await fetch(`${API_URL}/fines/lookup?referenceNo=${refNo}&categoryCode=${category}`);
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Fine not found');
+      if (!res.ok) throw new Error(data.message || 'Fine not found. Please check your details.');
       setFine(data.data);
       setStep(2);
     } catch (err) {
@@ -60,40 +60,35 @@ function App() {
   };
 
   const pageVariants = {
-    initial: { opacity: 0, y: 50, scale: 0.95 },
-    animate: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-    exit: { opacity: 0, y: -50, scale: 0.95, transition: { duration: 0.4 } }
+    initial: { opacity: 0, y: 30, filter: 'blur(10px)' },
+    animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+    exit: { opacity: 0, y: -30, filter: 'blur(10px)', transition: { duration: 0.4 } }
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black text-white font-sans selection:bg-indigo-500 selection:text-white">
-      {/* Cinematic Video Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105 filter blur-sm"
-        >
-          {/* A high quality abstract traffic/city video placeholder */}
-          <source src="https://cdn.pixabay.com/video/2020/05/24/40061-424888122_large.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90"></div>
+    <div className="relative min-h-screen font-sans text-gray-800 selection:bg-blue-200 selection:text-blue-900 overflow-hidden">
+      
+      {/* Stunning AI Background */}
+      <div 
+        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000"
+        style={{ backgroundImage: 'url("/bg.png")' }}
+      >
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]"></div>
       </div>
 
-      <nav className="relative z-10 flex items-center justify-between p-6 md:px-12 backdrop-blur-md border-b border-white/10 bg-black/20">
+      {/* Navigation */}
+      <nav className="relative z-10 flex items-center justify-between p-6 md:px-12 bg-white/40 backdrop-blur-xl border-b border-white/40 shadow-sm">
         <motion.div 
           initial={{ x: -20, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
           transition={{ duration: 0.8 }}
           className="flex items-center gap-3"
         >
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.5)]">
-            <Shield className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
+            <Shield className="w-5 h-5 text-white" />
           </div>
-          <span className="text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-            TrafficPay<span className="text-indigo-500">.</span>
+          <span className="text-2xl font-black tracking-tight text-slate-800">
+            TrafficPay<span className="text-blue-500">.</span>
           </span>
         </motion.div>
         
@@ -101,29 +96,33 @@ function App() {
           initial={{ x: 20, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300"
+          className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600"
         >
-          <a href="#" className="hover:text-white transition-colors flex items-center gap-2"><Activity className="w-4 h-4"/> Live Status</a>
-          <a href="#" className="hover:text-white transition-colors">Support</a>
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/50 rounded-full border border-white/60 shadow-sm">
+             <Info className="w-4 h-4 text-blue-500"/>
+             <span>No Login Required - Public Portal</span>
+          </div>
+          <a href="#" className="hover:text-blue-600 transition-colors flex items-center gap-2"><Activity className="w-4 h-4"/> System Status</a>
         </motion.div>
       </nav>
 
+      {/* Main Content */}
       <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-88px)] p-6">
         
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="text-center mb-12 max-w-2xl"
+          className="text-center mb-10 max-w-2xl"
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-tight">
-            Settle Fines <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-              Instantly.
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 text-slate-900 drop-shadow-sm">
+            Fast, Secure, <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
+              Resolved.
             </span>
           </h1>
-          <p className="text-lg text-gray-400 font-light">
-            Experience the next generation of seamless, secure, and instant traffic fine resolutions powered by our intelligent payment network.
+          <p className="text-lg text-slate-600 font-medium">
+            Enter your fine details directly below to settle your traffic violations instantly. No account or registration is required.
           </p>
         </motion.div>
 
@@ -135,11 +134,12 @@ function App() {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full max-w-md p-8 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
+              className="w-full max-w-md p-8 rounded-[2rem] bg-white/70 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(0,0,0,0.05)] relative overflow-hidden"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
-              <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-                <Search className="text-indigo-400" /> Fine Lookup
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-400 to-cyan-400"></div>
+              
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-slate-800">
+                <Search className="text-blue-500" /> Fine Lookup
               </h2>
               
               <AnimatePresence>
@@ -148,7 +148,7 @@ function App() {
                     initial={{ opacity: 0, height: 0 }} 
                     animate={{ opacity: 1, height: 'auto' }} 
                     exit={{ opacity: 0, height: 0 }}
-                    className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-3 text-sm"
+                    className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 flex items-center gap-3 text-sm font-medium shadow-sm"
                   >
                     <AlertCircle className="w-5 h-5 shrink-0" />
                     <p>{error}</p>
@@ -158,36 +158,36 @@ function App() {
 
               <form onSubmit={handleLookup} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Reference Number</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Reference Number</label>
                   <input
                     type="text"
                     value={refNo}
                     onChange={(e) => setRefNo(e.target.value)}
                     placeholder="e.g. TF-20261122-872910"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                    className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Category Code</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Category Code</label>
                   <input
                     type="text"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     placeholder="e.g. SP-01"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                    className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
                     required
                   />
                 </div>
                 <button 
                   type="submit" 
                   disabled={loading}
-                  className="w-full mt-4 bg-white text-black font-semibold py-4 rounded-xl hover:bg-gray-200 focus:ring-4 focus:ring-white/20 transition-all flex items-center justify-center gap-2 group disabled:opacity-70"
+                  className="w-full mt-6 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2 group disabled:opacity-70 disabled:hover:translate-y-0"
                 >
                   {loading ? (
-                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full" />
+                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full" />
                   ) : (
-                    <>Proceed <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></>
+                    <>Find My Fine <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></>
                   )}
                 </button>
               </form>
@@ -201,22 +201,21 @@ function App() {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full max-w-lg p-8 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+              className="w-full max-w-lg p-8 rounded-[2rem] bg-white/80 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(0,0,0,0.08)]"
             >
               <button 
                 onClick={() => setStep(1)} 
-                className="text-gray-400 hover:text-white transition-colors mb-6 text-sm font-medium flex items-center gap-1"
+                className="text-slate-500 hover:text-blue-600 transition-colors mb-6 text-sm font-bold flex items-center gap-1 bg-white/50 px-4 py-2 rounded-full border border-slate-200"
               >
-                ← Back
+                ← Return to Search
               </button>
               
-              <div className="mb-8 p-6 rounded-2xl bg-black/40 border border-white/5 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <p className="text-sm text-gray-400 mb-1">Total Amount Due</p>
-                <p className="text-5xl font-black text-white">LKR {fine.amount.$numberDecimal}</p>
-                <div className="mt-4 pt-4 border-t border-white/10 flex justify-between text-sm">
-                  <span className="text-gray-400">Vehicle: <span className="text-white font-medium">{fine.vehicleNo}</span></span>
-                  <span className="text-gray-400 text-right">Violation: <span className="text-white font-medium">{fine.categoryId.name}</span></span>
+              <div className="mb-8 p-8 rounded-3xl bg-gradient-to-br from-slate-50 to-blue-50 border border-blue-100 relative overflow-hidden group shadow-inner">
+                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-2">Total Amount Due</p>
+                <p className="text-6xl font-black text-slate-800 tracking-tight">LKR {fine.amount.$numberDecimal}</p>
+                <div className="mt-6 pt-6 border-t border-slate-200 flex justify-between text-sm">
+                  <span className="text-slate-500 font-medium">Vehicle: <span className="text-slate-900 font-bold bg-white px-3 py-1 rounded-md border border-slate-200 ml-2">{fine.vehicleNo}</span></span>
+                  <span className="text-slate-500 font-medium">Violation: <span className="text-slate-900 font-bold bg-white px-3 py-1 rounded-md border border-slate-200 ml-2">{fine.categoryId.name}</span></span>
                 </div>
               </div>
 
@@ -224,7 +223,7 @@ function App() {
                 {error && (
                   <motion.div 
                     initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-                    className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
+                    className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 text-sm font-medium"
                   >
                     {error}
                   </motion.div>
@@ -238,26 +237,26 @@ function App() {
                     placeholder="Cardholder Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all"
+                    className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 placeholder-slate-400 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
                     required
                   />
                   <input
                     type="text"
-                    placeholder="Mobile Number"
+                    placeholder="Mobile Number (for SMS)"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all"
+                    className="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 placeholder-slate-400 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
                     required
                   />
                 </div>
                 <div className="relative">
-                  <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                  <CreditCard className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
                   <input
                     type="text"
-                    placeholder="Card Number (Mock)"
+                    placeholder="Card Number (Mock Data)"
                     value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all font-mono"
+                    className="w-full bg-white border border-slate-200 rounded-2xl pl-14 pr-5 py-4 text-slate-800 placeholder-slate-400 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-mono shadow-sm"
                     required
                   />
                 </div>
@@ -265,12 +264,12 @@ function App() {
                 <button 
                   type="submit" 
                   disabled={loading}
-                  className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 rounded-xl hover:shadow-[0_0_30px_rgba(79,70,229,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                  className="w-full mt-8 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:translate-y-0"
                 >
                   {loading ? (
-                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full" />
+                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full" />
                   ) : (
-                    <>Authorize Payment <Shield className="w-4 h-4" /></>
+                    <>Confirm Payment <Shield className="w-5 h-5" /></>
                   )}
                 </button>
               </form>
@@ -283,25 +282,29 @@ function App() {
               variants={pageVariants}
               initial="initial"
               animate="animate"
-              className="w-full max-w-md p-10 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] text-center flex flex-col items-center"
+              className="w-full max-w-md p-12 rounded-[2.5rem] bg-white/90 backdrop-blur-2xl border border-white shadow-[0_20px_60px_rgba(0,0,0,0.1)] text-center flex flex-col items-center relative overflow-hidden"
             >
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-50 to-transparent opacity-50"></div>
+              
               <motion.div 
-                initial={{ scale: 0 }} 
-                animate={{ scale: 1 }} 
-                transition={{ type: "spring", damping: 15, delay: 0.2 }}
-                className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mb-6"
+                initial={{ scale: 0, rotate: -180 }} 
+                animate={{ scale: 1, rotate: 0 }} 
+                transition={{ type: "spring", damping: 12, delay: 0.2 }}
+                className="w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-400 flex items-center justify-center mb-8 shadow-xl shadow-emerald-500/30 z-10"
               >
-                <CheckCircle className="w-10 h-10 text-green-400" />
+                <CheckCircle className="w-12 h-12 text-white" />
               </motion.div>
-              <h2 className="text-3xl font-bold mb-2">Payment Verified</h2>
-              <p className="text-gray-400 mb-8 leading-relaxed">
-                Your transaction was successful. An official receipt has been dispatched to your mobile via SMS. You may now retrieve your driving license.
+              
+              <h2 className="text-3xl font-black mb-3 text-slate-800 z-10">Payment Successful!</h2>
+              <p className="text-slate-500 mb-10 leading-relaxed font-medium z-10">
+                Your transaction is complete. An official receipt has been dispatched to your mobile via SMS. You may now retrieve your driving license from the officer.
               </p>
+              
               <button 
                 onClick={() => { setStep(1); setRefNo(''); setCategory(''); }}
-                className="w-full border border-white/20 hover:bg-white/10 text-white font-semibold py-3 rounded-xl transition-all"
+                className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-4 rounded-2xl transition-all shadow-sm z-10"
               >
-                Return to Home
+                Start New Session
               </button>
             </motion.div>
           )}
@@ -310,7 +313,7 @@ function App() {
       </main>
       
       {/* Footer */}
-      <div className="absolute bottom-6 left-0 w-full text-center text-xs text-gray-500 z-10 font-mono tracking-widest">
+      <div className="absolute bottom-6 left-0 w-full text-center text-xs font-bold text-slate-400/80 z-10 uppercase tracking-[0.2em]">
         SRI LANKA TRAFFIC POLICE • SECURED BY TRAFFICPAY
       </div>
     </div>
