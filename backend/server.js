@@ -17,15 +17,12 @@ app.get('/', (req, res) => {
   res.send('Lanka Traffic Fine System API is running...');
 });
 
-// Import Routes (to be added)
-// app.use('/api/v1/auth', require('./routes/authRoutes'));
-// app.use('/api/v1/fine-categories', require('./routes/fineCategoriesRoutes'));
-// app.use('/api/v1/fines', require('./routes/finesRoutes'));
-// app.use('/api/v1/payments', require('./routes/paymentRoutes'));
-// app.use('/api/v1/notifications', require('./routes/notificationRoutes'));
-// app.use('/api/v1/analytics', require('./routes/analyticsRoutes'));
-// app.use('/api/v1/districts', require('./routes/districtRoutes'));
-// app.use('/api/v1/users', require('./routes/userRoutes'));
+// Import Routes
+app.use('/api/v1/auth', require('./routes/authRoutes'));
+app.use('/api/v1/fines', require('./routes/finesRoutes'));
+app.use('/api/v1/payments', require('./routes/paymentRoutes'));
+app.use('/api/v1/analytics', require('./routes/adminRoutes'));
+app.use('/api/v1/system', require('./routes/systemRoutes'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
