@@ -20,4 +20,5 @@ To ensure a smooth collaboration and prevent merge conflicts, all team members m
 1.  **Main Branch:** The `main` branch is the final integration branch and is always deployable. Do not push code directly to `main`.
 2.  **Feature Branches:** Create a separate feature branch for your tasks.
     * *Examples:* `feature/auth` (Member 1), `feature/fines` (Member 2), `feature/payments` (Member 3), `feature/admin` (Member 4).
-3.  **Final Merge:** All commits must be merged to the `main` branch via Pull Requests before the final evaluation.
+3.  **Final Merge:** All commits must be merged to the `main` branch via Pull Requests before the final evaluation.## Contributors
+- Theenuka Bandara
