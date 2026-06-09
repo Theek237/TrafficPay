@@ -14,5 +14,5 @@ app.use('/api/v1/fines', createProxyMiddleware({ target: process.env.FINES_SERVI
 app.use('/api/v1/payments', createProxyMiddleware({ target: process.env.PAYMENTS_SERVICE_URL || 'http://localhost:5003', changeOrigin: true }));
 app.use('/api/v1/system', createProxyMiddleware({ target: process.env.FINES_SERVICE_URL || 'http://localhost:5002', changeOrigin: true }));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5005;
 app.listen(PORT, () => console.log(`API Gateway running on port ${PORT}`));

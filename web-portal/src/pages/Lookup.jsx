@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CreditCard, CheckCircle, AlertCircle, ChevronRight, Lock } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api/v1';
+const API_URL = 'http://localhost:5005/api/v1';
 
 export default function Lookup() {
   const [refNo, setRefNo] = useState('');
@@ -53,9 +53,9 @@ export default function Lookup() {
   };
 
   const pageTransition = {
-    initial: { opacity: 0, y: 20, scale: 0.98, filter: 'blur(10px)' },
-    animate: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-    exit: { opacity: 0, y: -20, scale: 0.98, filter: 'blur(10px)', transition: { duration: 0.3 } }
+    initial: { opacity: 0, y: 10, scale: 0.99, filter: 'blur(5px)' },
+    animate: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 0.25, ease: 'easeOut' } },
+    exit: { opacity: 0, y: -10, scale: 0.99, filter: 'blur(5px)', transition: { duration: 0.15 } }
   };
 
   return (
