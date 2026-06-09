@@ -140,6 +140,20 @@ export default function Dashboard() {
   const paidFines = fines.filter(f => f.status === 'PAID').length;
   const pendingFines = fines.filter(f => f.status === 'PENDING').length;
 
+  const revenueByDistrict = fines.reduce((acc, fine) => {
+    const district = fine.districtId?.name || 'Unknown District';
+    const amount = parseFloat(fine.amount?.$numberDecimal || fine.amount || 0);
+    acc[district] = (acc[district] || 0) + amount;
+    return acc;
+  }, {});
+
+  const revenueByCategory = fines.reduce((acc, fine) => {
+    const category = fine.categoryId?.name || 'Unknown Offense';
+    const amount = parseFloat(fine.amount?.$numberDecimal || fine.amount || 0);
+    acc[category] = (acc[category] || 0) + amount;
+    return acc;
+  }, {});
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
@@ -204,6 +218,37 @@ export default function Dashboard() {
               <div className="flex gap-4 mt-2">
                 <div className="text-green-400 font-bold"><span className="text-2xl">{paidFines}</span> Paid</div>
                 <div className="text-amber-400 font-bold"><span className="text-2xl">{pendingFines}</span> Pending</div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Analytics Dashboards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            {/* District Breakdown */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-white mb-4">District-wise Collections</h3>
+              <div className="space-y-4 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+                {Object.entries(revenueByDistrict).map(([district, amount]) => (
+                  <div key={district} className="flex justify-between items-center border-b border-white/5 pb-2">
+                    <span className="text-gray-300 font-medium">{district}</span>
+                    <span className="text-cyan-400 font-bold">LKR {amount.toLocaleString()}</span>
+                  </div>
+                ))}
+                {Object.keys(revenueByDistrict).length === 0 && <div className="text-gray-500 text-sm">No data available</div>}
+              </div>
+            </motion.div>
+
+            {/* Category Breakdown */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-white mb-4">Collections by Offense</h3>
+              <div className="space-y-4 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+                {Object.entries(revenueByCategory).map(([category, amount]) => (
+                  <div key={category} className="flex justify-between items-center border-b border-white/5 pb-2">
+                    <span className="text-gray-300 font-medium">{category}</span>
+                    <span className="text-green-400 font-bold">LKR {amount.toLocaleString()}</span>
+                  </div>
+                ))}
+                {Object.keys(revenueByCategory).length === 0 && <div className="text-gray-500 text-sm">No data available</div>}
               </div>
             </motion.div>
           </div>
