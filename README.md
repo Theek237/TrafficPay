@@ -16,7 +16,7 @@ The user interface represents the cutting edge of modern web design, featuring a
 
 ## 🏗️ Architecture Design
 
-![High-Level Architecture Diagram](architecture.png)
+![High-Level Architecture Diagram](mern-architecture.png)
 
 The backend ecosystem utilizes an API Gateway pattern to route client requests securely to dedicated, lightweight microservices.
 
