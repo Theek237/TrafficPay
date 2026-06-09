@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Shield, Activity, Menu, X } from 'lucide-react';
 import Home from './pages/Home';
 import Lookup from './pages/Lookup';
+import Login from './pages/admin/Login';
+import Dashboard from './pages/admin/Dashboard';
 
 function App() {
   const location = useLocation();
@@ -63,9 +65,6 @@ function App() {
       {/* Routing with Page Transitions */}
       <main className="relative z-10 pt-20 min-h-screen flex flex-col">
         <AnimatePresence mode="wait">
-import Login from './pages/admin/Login';
-import Dashboard from './pages/admin/Dashboard';
-
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/lookup" element={<Lookup />} />
