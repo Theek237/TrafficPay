@@ -6,8 +6,8 @@ import { ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 export default function Home() {
   const pageTransition = {
     initial: { opacity: 0, filter: 'blur(10px)' },
-    animate: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0.8, ease: "easeOut" } },
-    exit: { opacity: 0, filter: 'blur(10px)', transition: { duration: 0.4 } }
+    animate: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0.3, ease: "easeOut" } },
+    exit: { opacity: 0, filter: 'blur(10px)', transition: { duration: 0.05 } }
   };
 
   return (
