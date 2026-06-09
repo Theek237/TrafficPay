@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Search, CreditCard, CheckCircle, AlertCircle, ChevronRight, Activity } from 'lucide-react';
+import { Shield, Search, CreditCard, CheckCircle, AlertTriangle, ChevronRight, Lock, FileText, BadgeCheck } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api/v1'; // Will be updated to gateway later
+const API_URL = 'http://localhost:5000/api/v1'; // API Gateway
 
 function App() {
   const [refNo, setRefNo] = useState('');
@@ -10,7 +10,7 @@ function App() {
   const [fine, setFine] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState(1); // 1: Lookup, 2: Pay, 3: Success
+  const [step, setStep] = useState(1);
 
   // Payment Form State
   const [name, setName] = useState('');
@@ -24,11 +24,11 @@ function App() {
     try {
       const res = await fetch(`${API_URL}/fines/lookup?referenceNo=${refNo}&categoryCode=${category}`);
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Fine not found');
+      if (!res.ok) throw new Error(data.message || 'Fine not found. Please verify your reference number.');
       setFine(data.data);
       setStep(2);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Unable to connect to the server. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -50,269 +50,247 @@ function App() {
         })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Payment Failed');
+      if (!res.ok) throw new Error(data.message || 'Payment transaction failed.');
       setStep(3);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Payment processing error.');
     } finally {
       setLoading(false);
     }
   };
 
-  const pageVariants = {
-    initial: { opacity: 0, y: 50, scale: 0.95 },
-    animate: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-    exit: { opacity: 0, y: -50, scale: 0.95, transition: { duration: 0.4 } }
+  const fadeUp = {
+    initial: { opacity: 0, y: 15 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+    exit: { opacity: 0, y: -15, transition: { duration: 0.3 } }
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black text-white font-sans selection:bg-indigo-500 selection:text-white">
-      {/* Cinematic Video Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105 filter blur-sm"
-        >
-          {/* A high quality abstract traffic/city video placeholder */}
-          <source src="https://cdn.pixabay.com/video/2020/05/24/40061-424888122_large.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90"></div>
-      </div>
-
-      <nav className="relative z-10 flex items-center justify-between p-6 md:px-12 backdrop-blur-md border-b border-white/10 bg-black/20">
-        <motion.div 
-          initial={{ x: -20, opacity: 0 }} 
-          animate={{ x: 0, opacity: 1 }} 
-          transition={{ duration: 0.8 }}
-          className="flex items-center gap-3"
-        >
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.5)]">
-            <Shield className="w-6 h-6 text-white" />
-          </div>
-          <span className="text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-            TrafficPay<span className="text-indigo-500">.</span>
-          </span>
-        </motion.div>
-        
-        <motion.div 
-          initial={{ x: 20, opacity: 0 }} 
-          animate={{ x: 0, opacity: 1 }} 
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300"
-        >
-          <a href="#" className="hover:text-white transition-colors flex items-center gap-2"><Activity className="w-4 h-4"/> Live Status</a>
-          <a href="#" className="hover:text-white transition-colors">Support</a>
-        </motion.div>
-      </nav>
-
-      <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-88px)] p-6">
-        
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="text-center mb-12 max-w-2xl"
-        >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-tight">
-            Settle Fines <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-              Instantly.
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 font-light">
-            Experience the next generation of seamless, secure, and instant traffic fine resolutions powered by our intelligent payment network.
-          </p>
-        </motion.div>
-
-        <AnimatePresence mode="wait">
-          {step === 1 && (
-            <motion.div 
-              key="step1"
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="w-full max-w-md p-8 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
-              <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-                <Search className="text-indigo-400" /> Fine Lookup
-              </h2>
-              
-              <AnimatePresence>
-                {error && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }} 
-                    animate={{ opacity: 1, height: 'auto' }} 
-                    exit={{ opacity: 0, height: 0 }}
-                    className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-3 text-sm"
-                  >
-                    <AlertCircle className="w-5 h-5 shrink-0" />
-                    <p>{error}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <form onSubmit={handleLookup} className="space-y-5">
-                <div>
-                  <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Reference Number</label>
-                  <input
-                    type="text"
-                    value={refNo}
-                    onChange={(e) => setRefNo(e.target.value)}
-                    placeholder="e.g. TF-20261122-872910"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Category Code</label>
-                  <input
-                    type="text"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    placeholder="e.g. SP-01"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                    required
-                  />
-                </div>
-                <button 
-                  type="submit" 
-                  disabled={loading}
-                  className="w-full mt-4 bg-white text-black font-semibold py-4 rounded-xl hover:bg-gray-200 focus:ring-4 focus:ring-white/20 transition-all flex items-center justify-center gap-2 group disabled:opacity-70"
-                >
-                  {loading ? (
-                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full" />
-                  ) : (
-                    <>Proceed <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></>
-                  )}
-                </button>
-              </form>
-            </motion.div>
-          )}
-
-          {step === 2 && fine && (
-            <motion.div 
-              key="step2"
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="w-full max-w-lg p-8 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
-            >
-              <button 
-                onClick={() => setStep(1)} 
-                className="text-gray-400 hover:text-white transition-colors mb-6 text-sm font-medium flex items-center gap-1"
-              >
-                ← Back
-              </button>
-              
-              <div className="mb-8 p-6 rounded-2xl bg-black/40 border border-white/5 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <p className="text-sm text-gray-400 mb-1">Total Amount Due</p>
-                <p className="text-5xl font-black text-white">LKR {fine.amount.$numberDecimal}</p>
-                <div className="mt-4 pt-4 border-t border-white/10 flex justify-between text-sm">
-                  <span className="text-gray-400">Vehicle: <span className="text-white font-medium">{fine.vehicleNo}</span></span>
-                  <span className="text-gray-400 text-right">Violation: <span className="text-white font-medium">{fine.categoryId.name}</span></span>
-                </div>
-              </div>
-
-              <AnimatePresence>
-                {error && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-                    className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
-                  >
-                    {error}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <form onSubmit={handlePayment} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Cardholder Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all"
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="Mobile Number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all"
-                    required
-                  />
-                </div>
-                <div className="relative">
-                  <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-                  <input
-                    type="text"
-                    placeholder="Card Number (Mock)"
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all font-mono"
-                    required
-                  />
-                </div>
-                
-                <button 
-                  type="submit" 
-                  disabled={loading}
-                  className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 rounded-xl hover:shadow-[0_0_30px_rgba(79,70,229,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-70"
-                >
-                  {loading ? (
-                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full" />
-                  ) : (
-                    <>Authorize Payment <Shield className="w-4 h-4" /></>
-                  )}
-                </button>
-              </form>
-            </motion.div>
-          )}
-
-          {step === 3 && (
-            <motion.div 
-              key="step3"
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              className="w-full max-w-md p-10 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] text-center flex flex-col items-center"
-            >
-              <motion.div 
-                initial={{ scale: 0 }} 
-                animate={{ scale: 1 }} 
-                transition={{ type: "spring", damping: 15, delay: 0.2 }}
-                className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mb-6"
-              >
-                <CheckCircle className="w-10 h-10 text-green-400" />
-              </motion.div>
-              <h2 className="text-3xl font-bold mb-2">Payment Verified</h2>
-              <p className="text-gray-400 mb-8 leading-relaxed">
-                Your transaction was successful. An official receipt has been dispatched to your mobile via SMS. You may now retrieve your driving license.
-              </p>
-              <button 
-                onClick={() => { setStep(1); setRefNo(''); setCategory(''); }}
-                className="w-full border border-white/20 hover:bg-white/10 text-white font-semibold py-3 rounded-xl transition-all"
-              >
-                Return to Home
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-      </main>
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-blue-900 selection:text-white flex flex-col">
       
-      {/* Footer */}
-      <div className="absolute bottom-6 left-0 w-full text-center text-xs text-gray-500 z-10 font-mono tracking-widest">
-        SRI LANKA TRAFFIC POLICE • SECURED BY TRAFFICPAY
+      {/* Official Top Bar */}
+      <div className="bg-slate-900 text-slate-300 text-xs py-2 px-6 flex justify-between items-center border-b border-slate-800">
+        <div className="flex items-center gap-4">
+          <span className="flex items-center gap-1"><Shield className="w-3 h-3 text-amber-500" /> Official Government Portal</span>
+        </div>
+        <div className="flex items-center gap-4 hidden md:flex">
+          <a href="#" className="hover:text-white transition-colors">Help Desk</a>
+          <a href="#" className="hover:text-white transition-colors">Language: EN</a>
+        </div>
       </div>
+
+      {/* Main Header */}
+      <header className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-blue-900 rounded-lg flex items-center justify-center shadow-inner">
+              <Shield className="w-7 h-7 text-amber-400" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-slate-900 tracking-tight leading-tight">Sri Lanka Traffic Police</h1>
+              <p className="text-sm text-slate-500 font-medium">Fine Settlement Portal</p>
+            </div>
+          </div>
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 rounded-md border border-green-200 text-sm font-semibold">
+            <Lock className="w-4 h-4" /> Secure 256-bit Encryption
+          </div>
+        </div>
+      </header>
+
+      {/* Content Area */}
+      <main className="flex-grow flex items-center justify-center p-6 relative">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+
+        <div className="w-full max-w-5xl grid md:grid-cols-2 gap-12 items-center relative z-10">
+          
+          {/* Information Side (Only visible on Step 1) */}
+          <div className={`hidden md:block transition-all duration-500 ${step !== 1 ? 'md:hidden' : ''}`}>
+            <h2 className="text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
+              Settle your traffic offenses <span className="text-blue-700">instantly online.</span>
+            </h2>
+            <ul className="space-y-6 mt-8">
+              <li className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-1">
+                  <Search className="w-5 h-5 text-blue-700" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Locate your fine</h3>
+                  <p className="text-slate-600 mt-1">Enter your Reference Number and Category Code exactly as they appear on your ticket.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-1">
+                  <CreditCard className="w-5 h-5 text-blue-700" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Pay securely</h3>
+                  <p className="text-slate-600 mt-1">We accept all major credit and debit cards through our encrypted payment gateway.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-1">
+                  <FileText className="w-5 h-5 text-blue-700" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Receive receipt</h3>
+                  <p className="text-slate-600 mt-1">Get an instant digital receipt via SMS to retrieve your driving license.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          {/* Interactive Form Side */}
+          <div className={`w-full max-w-md mx-auto ${step !== 1 ? 'md:col-span-2' : ''}`}>
+            <AnimatePresence mode="wait">
+              
+              {/* STEP 1: LOOKUP */}
+              {step === 1 && (
+                <motion.div key="step1" variants={fadeUp} initial="initial" animate="animate" exit="exit" className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+                  <div className="p-6 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                    <h2 className="text-xl font-bold text-slate-800">Lookup Ticket</h2>
+                    <BadgeCheck className="w-6 h-6 text-blue-600" />
+                  </div>
+                  
+                  <div className="p-8">
+                    <AnimatePresence>
+                      {error && (
+                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="mb-6 bg-red-50 text-red-700 p-4 rounded-lg flex items-start gap-3 border border-red-200 text-sm">
+                          <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
+                          <p>{error}</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <form onSubmit={handleLookup} className="space-y-6">
+                      <div>
+                        <label className="block text-sm font-bold text-slate-700 mb-2">Reference Number</label>
+                        <input
+                          type="text"
+                          value={refNo}
+                          onChange={(e) => setRefNo(e.target.value.toUpperCase())}
+                          placeholder="e.g. TF-20261122-872910"
+                          className="w-full border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow bg-slate-50 focus:bg-white"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-bold text-slate-700 mb-2">Category Code</label>
+                        <input
+                          type="text"
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value.toUpperCase())}
+                          placeholder="e.g. SP-01"
+                          className="w-full border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-shadow bg-slate-50 focus:bg-white"
+                          required
+                        />
+                      </div>
+                      <button type="submit" disabled={loading} className="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 rounded-lg transition-colors flex justify-center items-center gap-2 shadow-md disabled:opacity-70">
+                        {loading ? <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full" /> : <>Continue to Details <ChevronRight className="w-5 h-5" /></>}
+                      </button>
+                    </form>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STEP 2: PAYMENT */}
+              {step === 2 && fine && (
+                <motion.div key="step2" variants={fadeUp} initial="initial" animate="animate" exit="exit" className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden mx-auto max-w-xl">
+                  <div className="p-6 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                    <h2 className="text-xl font-bold text-slate-800">Payment Details</h2>
+                    <button onClick={() => setStep(1)} className="text-sm font-semibold text-blue-600 hover:text-blue-800">Cancel & Return</button>
+                  </div>
+                  
+                  <div className="p-8">
+                    {/* Invoice Summary */}
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-8">
+                      <div className="flex justify-between items-end mb-6">
+                        <div>
+                          <p className="text-sm text-slate-500 font-bold uppercase tracking-wider mb-1">Amount Due</p>
+                          <p className="text-4xl font-black text-slate-900">LKR {fine.amount.$numberDecimal}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm text-slate-500">Reference</p>
+                          <p className="font-mono font-bold text-slate-800">{fine.referenceNo}</p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-200 text-sm">
+                        <div>
+                          <span className="block text-slate-500 mb-1">Vehicle No.</span>
+                          <span className="font-bold text-slate-800 bg-white border border-slate-200 px-2 py-1 rounded">{fine.vehicleNo}</span>
+                        </div>
+                        <div>
+                          <span className="block text-slate-500 mb-1">Offense Category</span>
+                          <span className="font-bold text-slate-800">{fine.categoryId.name}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <AnimatePresence>
+                      {error && (
+                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="mb-6 bg-red-50 text-red-700 p-4 rounded-lg flex items-start gap-3 border border-red-200 text-sm">
+                          <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
+                          <p>{error}</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <form onSubmit={handlePayment} className="space-y-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                          <label className="block text-sm font-bold text-slate-700 mb-2">Cardholder Name</label>
+                          <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 bg-slate-50 focus:bg-white" required />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-bold text-slate-700 mb-2">Mobile Number (SMS Receipt)</label>
+                          <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="07XXXXXXXX" className="w-full border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 bg-slate-50 focus:bg-white" required />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-bold text-slate-700 mb-2">Card Number</label>
+                        <div className="relative">
+                          <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                          <input type="text" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} placeholder="0000 0000 0000 0000" className="w-full border border-slate-300 rounded-lg pl-12 pr-4 py-3 text-slate-900 font-mono focus:ring-2 focus:ring-blue-600 focus:border-blue-600 bg-slate-50 focus:bg-white" required />
+                        </div>
+                      </div>
+                      
+                      <button type="submit" disabled={loading} className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg transition-colors flex justify-center items-center gap-2 shadow-md disabled:opacity-70 text-lg">
+                        {loading ? <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} className="w-6 h-6 border-2 border-white/40 border-t-white rounded-full" /> : <>Pay LKR {fine.amount.$numberDecimal} <Lock className="w-5 h-5" /></>}
+                      </button>
+                    </form>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STEP 3: SUCCESS */}
+              {step === 3 && (
+                <motion.div key="step3" variants={fadeUp} initial="initial" animate="animate" className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden mx-auto max-w-md text-center p-10">
+                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle className="w-10 h-10 text-green-600" />
+                  </div>
+                  <h2 className="text-3xl font-black text-slate-900 mb-2">Payment Verified</h2>
+                  <p className="text-slate-600 mb-8">
+                    Your traffic fine has been successfully settled. An official receipt has been sent to your mobile number.
+                  </p>
+                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 mb-8 text-left">
+                    <p className="text-sm text-slate-500 mb-1">Transaction Reference</p>
+                    <p className="font-mono font-bold text-slate-800">TXN-{Math.floor(Math.random() * 100000000)}</p>
+                  </div>
+                  <button onClick={() => { setStep(1); setRefNo(''); setCategory(''); }} className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-lg transition-colors shadow-md">
+                    Return to Home
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-400 text-sm py-8 text-center border-t border-slate-800">
+        <p className="font-semibold text-slate-300">© 2026 Sri Lanka Traffic Police. All Rights Reserved.</p>
+        <p className="mt-2 text-xs">Developed by Theenuka & Team • Software Architecture Project</p>
+      </footer>
     </div>
   );
 }
