@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    container_name: trafficpay-api-gateway
+    ports:
+      - "5005:5005"
+    environment:
+      - PORT=5005
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - FINES_SERVICE_URL=http://fines-service:5002
+      - PAYMENTS_SERVICE_URL=http://payments-service:5003
+    depends_on:
+      - auth-service
+      - fines-service
+      - payments-service
+
+  auth-service:
+    build: ./auth-service
+    container_name: trafficpay-auth-service
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - NODE_ENV=production
+      - MONGO_URI=mongodb+srv://theenuka:theenuka123@cluster0.sfzhqxr.mongodb.net/traffic_pay?retryWrites=true&w=majority
+      - JWT_SECRET=supersecretjwtkey12345
+      - JWT_EXPIRES=24h
+
+  fines-service:
+    build: ./fines-service
+    container_name: trafficpay-fines-service
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+      - NODE_ENV=production
+      - MONGO_URI=mongodb+srv://theenuka:theenuka123@cluster0.sfzhqxr.mongodb.net/traffic_pay?retryWrites=true&w=majority
+      - JWT_SECRET=supersecretjwtkey12345
+
+  payments-service:
+    build: ./payments-service
+    container_name: trafficpay-payments-service
+    ports:
+      - "5003:5003"
+    environment:
+      - PORT=5003
+      - NODE_ENV=production
+      - MONGO_URI=mongodb+srv://theenuka:theenuka123@cluster0.sfzhqxr.mongodb.net/traffic_pay?retryWrites=true&w=majority
+      - JWT_SECRET=supersecretjwtkey12345
+
+  web-portal:
+    build: ./web-portal
+    container_name: trafficpay-web-portal
+    ports:
+      - "5173:80"
+    depends_on:
+      - api-gateway
