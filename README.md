@@ -9,7 +9,7 @@ Aligning with the Sri Lankan government's national policy of strengthening publi
 This repository follows a monorepo structure containing the following sub-projects:
 
 * **`backend/`**: Node.js and Express REST API handling the database and business logic.
-* **`mobile-app/`**: React Native application for drivers to make on-the-spot fine payments.
+* **`mobile-app/`**: Flutter application for drivers to make on-the-spot fine payments.
 * **`web-portal/`**: React Single Page Application (SPA) for drivers to pay fines online later.
 * **`admin-portal/`**: React web portal for senior officials to monitor traffic fine collections nationwide.
 
