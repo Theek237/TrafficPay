@@ -1,21 +1,16 @@
-# Web Portal 🌐
+# React + Vite
 
-This is the public Web Portal for the Sri Lanka Traffic Fine System. It is a React Single Page Application (SPA) designed for drivers who cannot pay their traffic fines on-the-spot and need to settle them online later.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🛠️ Tech Stack
-* **Frontend Framework:** React SPA
-* **API Communication:** Axios / Fetch API
+Currently, two official plugins are available:
 
-## ✨ Key Features
-* **Fine Lookup:** Drivers can search for their outstanding fines using the Reference Number and Category Code printed on their fine sheet.
-* **Online Payment:** Securely pay fines using the mock payment gateway integration. 
-* **Digital Receipts:** View and print payment confirmation and receipt details immediately after a successful transaction.
-* **Hardcoded Districts:** Uses a static, hardcoded list of the 25 administrative districts for any required dropdowns, eliminating unnecessary backend calls.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
+## React Compiler
 
-## 🚀 Getting Started
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### Prerequisites
-* Node.js installed on your machine.
-* The backend REST API must be running locally.
+## Expanding the ESLint configuration
 
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
