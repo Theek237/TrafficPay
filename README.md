@@ -1,77 +1,114 @@
-# 🚦 TrafficPay - Smart City Traffic Fine Management
-
 <div align="center">
-  <p>A next-generation, microservice-based web portal for managing and processing smart-city traffic violations.</p>
+  <img src="web-portal/public/logo.png" alt="TrafficPay Logo" width="150" />
+  <h1>🚦 TrafficPay</h1>
+  <p><b>Next-Generation Smart City Traffic Fine Management Ecosystem</b></p>
+
+  <!-- Badges -->
+  <p>
+    <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+    <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+    <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+    <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+    <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter" />
+  </p>
 </div>
 
 ---
 
 ## 📖 Overview
 
-TrafficPay is a robust Software Architecture project designed to handle the secure lookup, management, and payment of traffic fines. Moving away from traditional monolithic architectures, TrafficPay is built on a highly scalable, decoupled **Microservices Architecture**, ensuring fault tolerance, independent scaling, and distinct domain boundaries.
+**TrafficPay** is a comprehensive, scalable Software Architecture project engineered to modernize how smart cities process, manage, and settle traffic violations. By departing from legacy monolithic structures, TrafficPay embraces a resilient, decoupled **Microservices Architecture**. 
 
-The user interface represents the cutting edge of modern web design, featuring an ultra-premium, responsive aesthetic powered by advanced animations, glassmorphism, and dynamic 3D visuals.
+This ecosystem ensures fault tolerance, dynamic scalability, and strict domain isolation, providing a seamless experience for both citizens (via the Web Portal) and law enforcement officers (via the Mobile App).
 
 ---
 
-## 🏗️ Architecture Design
+## 🏗️ High-Level Architecture
 
 <div align="center">
-  <img src="mern-architecture.png" alt="High-Level Architecture Diagram" width="700">
+  <img src="mern-architecture.png" alt="MERN Microservices Architecture Diagram" width="800">
+  <p><i>TrafficPay Ecosystem: Decoupled MERN Microservices connected via an API Gateway.</i></p>
 </div>
 
-The backend ecosystem utilizes an API Gateway pattern to route client requests securely to dedicated, lightweight microservices.
+The backend relies on the **API Gateway Pattern** to securely marshal network traffic to isolated, lightweight microservices:
 
-*   **API Gateway (Port 5005)**: The single point of entry for the frontend, handling CORS, logging, and proxy routing to internal services.
-*   **Authentication Service (Port 5001)**: Dedicated to user identity, RBAC (Role-Based Access Control), and issuing stateless JWTs.
-*   **Fines Service (Port 5002)**: Manages the core domain logic of issuing traffic tickets, scanning the database for violations, and calculating demerit points.
-*   **Payments Service (Port 5003)**: Securely processes fine payments, logs transaction histories, and interfaces with simulated SMS gateways.
+- 🛡️ **API Gateway (Port 5005)**: The central nervous system. Handles rate limiting, CORS configuration, centralized logging, and reverse-proxying.
+- 🔐 **Auth Service (Port 5001)**: Dedicated identity provider. Manages RBAC (Role-Based Access Control) and issues stateless JWTs.
+- 📝 **Fines Service (Port 5002)**: The core domain logic for issuing citations, querying active offenses, and determining demerit scores.
+- 💳 **Payments Service (Port 5003)**: Securely handles transaction lifecycles, financial data auditing, and mock SMS receipt dispatching.
 
-## 💻 Tech Stack
+---
 
-### Frontend (Client)
-*   **Framework**: React 19 (Vite)
-*   **Styling**: Tailwind CSS v4
-*   **Animations**: Framer Motion
-*   **Icons**: Lucide React
-*   **Routing**: React Router DOM v7
+## 💻 Technology Stack
 
-### Backend (Microservices)
-*   **Runtime**: Node.js
-*   **Framework**: Express.js
-*   **Database**: MongoDB Atlas (Cloud)
-*   **ODM**: Mongoose
-*   **Security**: bcryptjs, jsonwebtoken (JWT)
-*   **Routing**: http-proxy-middleware
+### 🌐 Frontend (Web Portal)
+- **Framework**: React 19 (Vite)
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion (Hardware-accelerated)
+- **Routing**: React Router DOM v7
+
+### 📱 Mobile Application (Officers)
+- **Framework**: Flutter / Dart
+- **Architecture**: Modular Services Pattern
+- **State**: Shared Preferences for persistent Auth Tokens
+
+### ⚙️ Backend (Microservices)
+- **Runtime Environment**: Node.js
+- **Server Framework**: Express.js
+- **Database**: MongoDB Atlas (Cloud)
+- **ODM**: Mongoose
+- **Orchestration**: Docker & Docker Compose
 
 ---
 
 ## ✨ Key Features
 
-1.  **Immersive 3D UI:** A stunning, cinematic frontend interface featuring dynamic blur filters, floating animations, and high-contrast smart-city aesthetics.
-2.  **True Microservices:** Completely decoupled backend services ensuring high availability and domain-driven design.
-3.  **Live Cloud Database:** Integrated directly with MongoDB Atlas for persistent, cloud-based data storage.
-4.  **Secure Authentication:** JWT-based stateless authentication preventing unauthorized access to officer and admin routes.
-5.  **Real-Time Data Fetching:** Instantaneous fine lookups utilizing dynamic API Gateway routing.
+1. 🌌 **Cinematic UI/UX:** A stunning, ultra-premium frontend featuring dynamic glassmorphism, responsive 3D assets, and seamless page transitions.
+2. 🧩 **True Microservices:** Completely isolated domain services ensuring zero single-point-of-failure.
+3. 🐳 **Fully Dockerized:** Entire ecosystem is containerized for "one-click" local deployments using `docker-compose`.
+4. 🔒 **Stateless Security:** Robust JWT-based authentication safeguarding both Admin Web Portals and Officer Mobile Apps.
+5. ⚡ **Lightning Fast Responses:** Optimized React chunking and API Gateway mapping guarantees instant query resolution.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (Local Development)
 
-To run the entire microservices cluster and the web portal locally, we use **Docker**.
+We have fully dockerized the TrafficPay cluster. Starting the entire infrastructure takes just a single command.
 
-### Start the Entire System
-Ensure you have Docker Desktop running, then open your terminal in the root directory and run:
+### 1. Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running.
+- [Flutter SDK](https://flutter.dev/docs/get-started/install) (Optional: if building the mobile app locally).
+
+### 2. Boot the Microservices Cluster
+Open your terminal in the root directory and build the containers:
 
 ```bash
 docker-compose up --build
 ```
+> **Note**: This spins up the API Gateway, Auth, Fines, Payments, and Web Portal simultaneously in isolated containers.
 
-### Access the Application
-- **Web Portal**: Open your browser and navigate to `http://localhost:5173`
-- **Mobile App**: Run the Flutter app in an emulator pointing to the API Gateway at `http://localhost:5005`
+### 3. Access the Platforms
+- 🖥️ **Web Portal**: Navigate to `http://localhost:5173`
+- 📡 **API Gateway**: Listening on `http://localhost:5005`
+
+### 4. Boot the Mobile App (Optional)
+Open a new terminal window:
+```bash
+cd mobile-app
+flutter pub get
+flutter run
+```
+
 ---
 
+## 🛡️ Security Best Practices Implemented
+- **No Secrets in Source Control**: Strict `.gitignore` implementations prevent `.env` file leaks.
+- **Node Modules Ignored**: Minimized repository bloat.
+- **Multi-stage Docker Builds**: Production-ready, non-root user execution environments for microservices.
+
+<br>
+
 <div align="center">
-  <i>Developed for Advanced Software Architecture</i>
+  <i>Developed meticulously for Advanced Software Architecture.</i>
 </div>
