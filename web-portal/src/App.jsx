@@ -7,6 +7,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Lookup = lazy(() => import('./pages/Lookup'));
 const Login = lazy(() => import('./pages/admin/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
+const Network = lazy(() => import('./pages/Network'));
 
 function App() {
   const location = useLocation();
@@ -36,7 +37,7 @@ function App() {
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
             <Link to="/" className="hover:text-white transition-colors">Home</Link>
             <Link to="/lookup" className="hover:text-white transition-colors">Fine Lookup</Link>
-            <a href="#" className="hover:text-white transition-colors">Smart City Network</a>
+            <Link to="/network" className="hover:text-white transition-colors">Smart City Network</Link>
             <Link to="/admin/login" className="hover:text-white transition-colors">Admin Portal</Link>
             <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
@@ -58,6 +59,7 @@ function App() {
             <div className="flex flex-col gap-6 text-xl font-medium">
               <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
               <Link to="/lookup" onClick={() => setIsMenuOpen(false)}>Fine Lookup</Link>
+              <Link to="/network" onClick={() => setIsMenuOpen(false)}>Smart City Network</Link>
             </div>
           </motion.div>
         )}
@@ -74,6 +76,7 @@ function App() {
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<Home />} />
               <Route path="/lookup" element={<Lookup />} />
+              <Route path="/network" element={<Network />} />
               <Route path="/admin/login" element={<Login />} />
               <Route path="/admin/dashboard" element={<Dashboard />} />
             </Routes>
