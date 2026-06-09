@@ -1,22 +1,16 @@
-# Admin Portal 📊
+# React + Vite
 
-This is the Administrative Web Portal for the Sri Lanka Traffic Fine System, allowing senior officials to monitor traffic fine collections nationwide. It is built as a React Single Page Application (SPA).
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🛠️ Tech Stack
-* **Frontend Framework:** React SPA.
-* **Data Visualization:** Recharts / Chart.js.
+Currently, two official plugins are available:
 
-## ✨ Key Features
-* **National Monitoring:** Provides insights into traffic fine collections across the country.
-* **District-wise Collections:** Displays total collections grouped by district.
-* **Category Breakdown:** Shows revenue breakdowns by different fine categories.
-* **Trend Analysis:** Visualizes daily and monthly collection trends.
-* **User Management:** Allows administrators to activate or deactivate user accounts.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
+## React Compiler
 
-## 🚀 Getting Started
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### Prerequisites
-* Node.js installed on your machine.
-* The backend REST API must be running locally.
+## Expanding the ESLint configuration
 
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
