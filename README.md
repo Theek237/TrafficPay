@@ -16,6 +16,8 @@ The user interface represents the cutting edge of modern web design, featuring a
 
 ## 🏗️ Architecture Design
 
+![High-Level Architecture Diagram](architecture.png)
+
 The backend ecosystem utilizes an API Gateway pattern to route client requests securely to dedicated, lightweight microservices.
 
 *   **API Gateway (Port 5005)**: The single point of entry for the frontend, handling CORS, logging, and proxy routing to internal services.
@@ -54,39 +56,18 @@ The backend ecosystem utilizes an API Gateway pattern to route client requests s
 
 ## 🚀 Getting Started
 
-To run the entire microservices cluster locally:
+To run the entire microservices cluster and the web portal locally, we use **Docker**.
 
-### 1. Start the Microservices
-Open separate terminal windows and start each service:
+### Start the Entire System
+Ensure you have Docker Desktop running, then open your terminal in the root directory and run:
 
 ```bash
-# Start API Gateway
-cd api-gateway
-node server.js
-
-# Start Auth Service
-cd auth-service
-node server.js
-
-# Start Fines Service
-cd fines-service
-node server.js
-
-# Start Payments Service
-cd payments-service
-node server.js
+docker-compose up --build
 ```
 
-### 2. Start the Frontend Web Portal
-```bash
-cd web-portal
-npm install
-npm run dev
-```
-
-### 3. Access the Application
-Open your browser and navigate to: `http://localhost:5173`
-
+### Access the Application
+- **Web Portal**: Open your browser and navigate to `http://localhost:5173`
+- **Mobile App**: Run the Flutter app in an emulator pointing to the API Gateway at `http://localhost:5005`
 ---
 
 <div align="center">
