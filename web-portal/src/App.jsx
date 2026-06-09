@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Shield, Activity, Menu, X } from 'lucide-react';
-import Home from './pages/Home';
-import Lookup from './pages/Lookup';
-import Login from './pages/admin/Login';
-import Dashboard from './pages/admin/Dashboard';
+
+const Home = lazy(() => import('./pages/Home'));
+const Lookup = lazy(() => import('./pages/Lookup'));
+const Login = lazy(() => import('./pages/admin/Login'));
+const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 
 function App() {
   const location = useLocation();
@@ -65,12 +66,18 @@ function App() {
       {/* Routing with Page Transitions */}
       <main className="relative z-10 pt-20 min-h-screen flex flex-col">
         <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/lookup" element={<Lookup />} />
-            <Route path="/admin/login" element={<Login />} />
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-          </Routes>
+          <Suspense fallback={
+            <div className="flex-grow flex items-center justify-center">
+              <div className="w-8 h-8 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin"></div>
+            </div>
+          }>
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home />} />
+              <Route path="/lookup" element={<Lookup />} />
+              <Route path="/admin/login" element={<Login />} />
+              <Route path="/admin/dashboard" element={<Dashboard />} />
+            </Routes>
+          </Suspense>
         </AnimatePresence>
       </main>
 
