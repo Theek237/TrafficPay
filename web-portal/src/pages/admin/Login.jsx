@@ -48,8 +48,8 @@ export default function Login() {
 
       <div className="w-full max-w-md p-8 rounded-3xl bg-white/5 backdrop-blur-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)]">
-            <Shield className="w-8 h-8 text-white" />
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-[0_0_40px_rgba(6,182,212,0.5)] overflow-hidden">
+            <img src="/logo.png" alt="TrafficPay Logo" className="w-full h-full object-cover" />
           </div>
         </div>
         <h2 className="text-3xl font-black mb-2 text-center text-white">Admin Portal</h2>
