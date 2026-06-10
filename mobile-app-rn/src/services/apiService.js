@@ -41,6 +41,16 @@ class ApiService {
     await AsyncStorage.removeItem('traffic_user');
   }
 
+  // System: Get Districts
+  async getDistricts() {
+    try {
+      const res = await axios.get(`${AppConstants.apiUrl}/system/districts`);
+      return res.data.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || error.message || 'Failed to load districts');
+    }
+  }
+
   // Fines: Get Fine Categories
   async getCategories() {
     try {
