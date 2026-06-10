@@ -81,7 +81,12 @@ exports.lookupFine = async (req, res, next) => {
 // @access    Private (ADMIN)
 exports.getFines = async (req, res, next) => {
   try {
-    const fines = await Fine.find()
+    let query = {};
+    if (req.user.role === 'OFFICER') {
+      query.officerId = req.user.id;
+    }
+
+    const fines = await Fine.find(query)
       .populate('categoryId', 'code name')
       .populate('districtId', 'name province')
       .populate('officerId', 'fullName badgeNo')
