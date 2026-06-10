@@ -9,10 +9,10 @@ app.use(cors());
 app.use(morgan('dev'));
 
 // Routing to microservices
-app.use('/api/v1/auth', createProxyMiddleware({ target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001', changeOrigin: true }));
-app.use('/api/v1/fines', createProxyMiddleware({ target: process.env.FINES_SERVICE_URL || 'http://localhost:5002', changeOrigin: true }));
-app.use('/api/v1/payments', createProxyMiddleware({ target: process.env.PAYMENTS_SERVICE_URL || 'http://localhost:5003', changeOrigin: true }));
-app.use('/api/v1/system', createProxyMiddleware({ target: process.env.FINES_SERVICE_URL || 'http://localhost:5002', changeOrigin: true }));
+app.use('/api/v1/auth', createProxyMiddleware({ target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001', changeOrigin: true, pathRewrite: { '^/api/v1/auth': '' } }));
+app.use('/api/v1/fines', createProxyMiddleware({ target: process.env.FINES_SERVICE_URL || 'http://localhost:5002', changeOrigin: true, pathRewrite: { '^/api/v1/fines': '' } }));
+app.use('/api/v1/payments', createProxyMiddleware({ target: process.env.PAYMENTS_SERVICE_URL || 'http://localhost:5003', changeOrigin: true, pathRewrite: { '^/api/v1/payments': '' } }));
+app.use('/api/v1/system', createProxyMiddleware({ target: process.env.FINES_SERVICE_URL || 'http://localhost:5002', changeOrigin: true, pathRewrite: { '^/api/v1/system': '' } }));
 
 const PORT = process.env.PORT || 5005;
 app.listen(PORT, () => console.log(`API Gateway running on port ${PORT}`));

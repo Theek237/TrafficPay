@@ -23,11 +23,11 @@ class ApiService {
         email,
         password,
       });
-      const data = res.data;
-      if (data.token) {
-        await AsyncStorage.setItem('traffic_token', data.token);
-        await AsyncStorage.setItem('traffic_user', JSON.stringify(data.user));
-        return data.user;
+      const payload = res.data.data;
+      if (payload && payload.token) {
+        await AsyncStorage.setItem('traffic_token', payload.token);
+        await AsyncStorage.setItem('traffic_user', JSON.stringify(payload.user));
+        return payload.user;
       }
       throw new Error('Login failed');
     } catch (error) {
