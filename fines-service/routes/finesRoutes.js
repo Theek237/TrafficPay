@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/lookup', lookupFine);
 router.post('/', protect, authorize('OFFICER', 'ADMIN'), issueFine);
-router.get('/', protect, authorize('ADMIN'), getFines);
+router.get('/', protect, authorize('OFFICER', 'ADMIN'), getFines);
 router.put('/:id', protect, authorize('ADMIN'), updateFine);
 router.delete('/:id', protect, authorize('ADMIN'), deleteFine);
 
