@@ -33,30 +33,30 @@ export default function FineLookupScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-          <Text style={styles.backText}>{'< Back'}</Text>
-        </TouchableOpacity>
-
+        
         <View style={styles.header}>
-          <Text style={styles.icon}>🔍</Text>
-          <Text style={styles.title}>Find Your Fine</Text>
-          <Text style={styles.subtitle}>Enter the details from your physical ticket.</Text>
+          <Text style={styles.icon}>🚔</Text>
+          <Text style={styles.title}>Traffic<Text style={{color: '#06b6d4'}}>Pay</Text></Text>
+          <Text style={styles.subtitle}>Secure Smart City Fine Portal</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.label}>Reference Number</Text>
+          <Text style={styles.cardTitle}>Find Your Ticket</Text>
+          <Text style={styles.label}>REFERENCE NUMBER</Text>
           <TextInput
             style={styles.input}
             placeholder="e.g. FIN-123456"
+            placeholderTextColor="#6b7280"
             value={refNo}
             onChangeText={setRefNo}
             autoCapitalize="characters"
           />
 
-          <Text style={styles.label}>Category Code</Text>
+          <Text style={styles.label}>CATEGORY CODE</Text>
           <TextInput
             style={styles.input}
             placeholder="e.g. SPD"
+            placeholderTextColor="#6b7280"
             value={categoryCode}
             onChangeText={setCategoryCode}
             autoCapitalize="characters"
@@ -74,24 +74,32 @@ export default function FineLookupScreen({ navigation }) {
             )}
           </TouchableOpacity>
         </View>
+
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.officerLink}>🔒 Officer Portal Login</Text>
+          </TouchableOpacity>
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f9fafb' },
+  container: { flex: 1, backgroundColor: '#050505' },
   scrollContainer: { padding: 24, flexGrow: 1, justifyContent: 'center' },
-  backBtn: { position: 'absolute', top: 16, left: 16, zIndex: 10 },
-  backText: { color: '#3f51b5', fontWeight: 'bold', fontSize: 16 },
   header: { alignItems: 'center', marginBottom: 40 },
   icon: { fontSize: 60, marginBottom: 16 },
-  title: { fontSize: 28, fontWeight: '900', color: '#1f2937' },
-  subtitle: { fontSize: 14, color: '#6b7280', marginTop: 8 },
-  card: { backgroundColor: '#fff', padding: 24, borderRadius: 16, elevation: 2, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 },
-  label: { fontSize: 14, fontWeight: 'bold', color: '#374151', marginBottom: 8 },
-  input: { backgroundColor: '#f9fafb', borderWidth: 1, borderColor: '#d1d5db', borderRadius: 12, padding: 16, marginBottom: 20, fontSize: 16 },
-  btn: { backgroundColor: '#3f51b5', padding: 16, borderRadius: 12, alignItems: 'center', marginTop: 8 },
+  title: { fontSize: 36, fontWeight: '900', color: '#ffffff', tracking: -1 },
+  subtitle: { fontSize: 14, color: '#9ca3af', marginTop: 8 },
+  card: { backgroundColor: 'rgba(255,255,255,0.05)', padding: 24, borderRadius: 20, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
+  cardTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', marginBottom: 20 },
+  label: { fontSize: 12, fontWeight: 'bold', color: '#9ca3af', marginBottom: 8, letterSpacing: 1 },
+  input: { backgroundColor: 'rgba(255,255,255,0.03)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', borderRadius: 12, padding: 16, marginBottom: 20, fontSize: 16, color: '#fff' },
+  btn: { backgroundColor: '#06b6d4', padding: 16, borderRadius: 12, alignItems: 'center', marginTop: 8 },
   btnDisabled: { opacity: 0.7 },
   btnText: { color: '#fff', fontSize: 16, fontWeight: 'bold', letterSpacing: 1 },
+  footer: { marginTop: 40, alignItems: 'center' },
+  officerLink: { color: '#6b7280', fontSize: 14, fontWeight: '600' }
 });

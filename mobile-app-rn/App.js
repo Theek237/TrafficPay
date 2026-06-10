@@ -17,11 +17,11 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator 
-          initialRouteName="Login"
+          initialRouteName="FineLookup"
           screenOptions={{
-            headerStyle: { backgroundColor: '#3f51b5' },
+            headerStyle: { backgroundColor: '#050505' },
             headerTintColor: '#fff',
-            headerTitleStyle: { fontWeight: 'bold' },
+            headerTitleStyle: { fontWeight: 'bold', color: '#06b6d4' },
           }}
         >
           {/* Auth Flow */}
