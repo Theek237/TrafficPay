@@ -29,10 +29,15 @@ export default function LoginScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        
+        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+          <Text style={styles.backText}>{'< Back to Fine Lookup'}</Text>
+        </TouchableOpacity>
+
         <View style={styles.header}>
           <Text style={styles.logoIcon}>🛡️</Text>
-          <Text style={styles.title}>TrafficPay</Text>
-          <Text style={styles.subtitle}>Officer Portal</Text>
+          <Text style={styles.title}>Officer Portal</Text>
+          <Text style={styles.subtitle}>Authorized Personnel Only</Text>
         </View>
 
         {error && (
@@ -41,61 +46,61 @@ export default function LoginScreen({ navigation }) {
           </View>
         )}
 
-        <TextInput
-          style={styles.input}
-          placeholder="Email Address"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
+        <View style={styles.card}>
+          <Text style={styles.label}>EMAIL ADDRESS</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="officer@traffic.com"
+            placeholderTextColor="#6b7280"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
+          />
 
-        <TouchableOpacity 
-          style={[styles.loginBtn, isLoading && styles.loginBtnDisabled]} 
-          onPress={handleLogin}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.loginBtnText}>SECURE LOGIN</Text>
-          )}
-        </TouchableOpacity>
+          <Text style={styles.label}>PASSWORD</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="••••••••"
+            placeholderTextColor="#6b7280"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
 
-        <View style={styles.divider} />
+          <TouchableOpacity 
+            style={[styles.loginBtn, isLoading && styles.loginBtnDisabled]} 
+            onPress={handleLogin}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.loginBtnText}>SECURE LOGIN</Text>
+            )}
+          </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity 
-          style={styles.publicBtn}
-          onPress={() => navigation.navigate('FineLookup')}
-        >
-          <Text style={styles.publicBtnText}>🌍 Public Access: Pay a Fine</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f9fafb' },
+  container: { flex: 1, backgroundColor: '#050505' },
   scrollContainer: { padding: 24, flexGrow: 1, justifyContent: 'center' },
-  header: { alignItems: 'center', marginBottom: 50 },
-  logoIcon: { fontSize: 80, marginBottom: 20 },
-  title: { fontSize: 32, fontWeight: '900', color: '#3f51b5' },
-  subtitle: { fontSize: 16, fontWeight: 'bold', color: '#666', letterSpacing: 2 },
-  errorBox: { backgroundColor: '#fee2e2', padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#fca5a5', marginBottom: 20 },
-  errorText: { color: '#ef4444' },
-  input: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#d1d5db', borderRadius: 12, padding: 16, marginBottom: 16, fontSize: 16 },
-  loginBtn: { backgroundColor: '#3f51b5', padding: 16, borderRadius: 12, alignItems: 'center', marginTop: 16 },
+  backBtn: { position: 'absolute', top: 16, left: 16, zIndex: 10 },
+  backText: { color: '#9ca3af', fontWeight: 'bold', fontSize: 14 },
+  header: { alignItems: 'center', marginBottom: 40 },
+  logoIcon: { fontSize: 60, marginBottom: 16 },
+  title: { fontSize: 32, fontWeight: '900', color: '#ffffff' },
+  subtitle: { fontSize: 14, fontWeight: 'bold', color: '#06b6d4', letterSpacing: 2, marginTop: 8 },
+  errorBox: { backgroundColor: 'rgba(239, 68, 68, 0.1)', padding: 12, borderRadius: 8, borderWidth: 1, borderColor: 'rgba(239, 68, 68, 0.5)', marginBottom: 20 },
+  errorText: { color: '#fca5a5', textAlign: 'center' },
+  card: { backgroundColor: 'rgba(255,255,255,0.05)', padding: 24, borderRadius: 20, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
+  label: { fontSize: 12, fontWeight: 'bold', color: '#9ca3af', marginBottom: 8, letterSpacing: 1 },
+  input: { backgroundColor: 'rgba(255,255,255,0.03)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', borderRadius: 12, padding: 16, marginBottom: 20, fontSize: 16, color: '#fff' },
+  loginBtn: { backgroundColor: '#3b82f6', padding: 16, borderRadius: 12, alignItems: 'center', marginTop: 8 },
   loginBtnDisabled: { opacity: 0.7 },
   loginBtnText: { color: '#fff', fontSize: 16, fontWeight: 'bold', letterSpacing: 1 },
-  divider: { height: 1, backgroundColor: '#e5e7eb', marginVertical: 40 },
-  publicBtn: { alignItems: 'center' },
-  publicBtnText: { color: '#3f51b5', fontWeight: 'bold', fontSize: 16 },
 });

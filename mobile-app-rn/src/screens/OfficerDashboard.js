@@ -36,17 +36,17 @@ export default function OfficerDashboard({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f9fafb' },
+  container: { flex: 1, backgroundColor: '#050505' },
   content: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
   icon: { fontSize: 100, marginBottom: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#1f2937', marginBottom: 8 },
-  subtitle: { color: '#6b7280', textAlign: 'center' },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#ffffff', marginBottom: 8 },
+  subtitle: { color: '#9ca3af', textAlign: 'center' },
   logoutBtn: { marginRight: 16 },
-  logoutText: { color: '#fff', fontWeight: 'bold' },
+  logoutText: { color: '#06b6d4', fontWeight: 'bold' },
   fab: { 
-    position: 'absolute', bottom: 32, right: 24, backgroundColor: '#3f51b5', 
+    position: 'absolute', bottom: 32, right: 24, backgroundColor: '#3b82f6', 
     paddingVertical: 16, paddingHorizontal: 24, borderRadius: 30, 
-    elevation: 4, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84 
+    elevation: 4, shadowColor: '#3b82f6', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8 
   },
-  fabText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  fabText: { color: '#fff', fontWeight: 'bold', fontSize: 16, letterSpacing: 1 },
 });

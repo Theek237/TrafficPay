@@ -54,14 +54,35 @@ export default function PaymentScreen({ route, navigation }) {
         </View>
       </View>
 
-      <Text style={styles.inputLabel}>Cardholder Name</Text>
-      <TextInput style={styles.input} value={name} onChangeText={setName} />
+      <Text style={styles.inputLabel}>CARDHOLDER NAME</Text>
+      <TextInput 
+        style={styles.input} 
+        value={name} 
+        onChangeText={setName} 
+        placeholder="e.g. John Doe"
+        placeholderTextColor="#6b7280"
+      />
 
-      <Text style={styles.inputLabel}>Mobile Number</Text>
-      <TextInput style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
+      <Text style={styles.inputLabel}>MOBILE NUMBER</Text>
+      <TextInput 
+        style={styles.input} 
+        value={phone} 
+        onChangeText={setPhone} 
+        keyboardType="phone-pad" 
+        placeholder="e.g. 0712345678"
+        placeholderTextColor="#6b7280"
+      />
 
-      <Text style={styles.inputLabel}>Card Number</Text>
-      <TextInput style={styles.input} value={cardNumber} onChangeText={setCardNumber} keyboardType="numeric" secureTextEntry />
+      <Text style={styles.inputLabel}>CARD NUMBER</Text>
+      <TextInput 
+        style={styles.input} 
+        value={cardNumber} 
+        onChangeText={setCardNumber} 
+        keyboardType="numeric" 
+        secureTextEntry 
+        placeholder="•••• •••• •••• ••••"
+        placeholderTextColor="#6b7280"
+      />
 
       <TouchableOpacity 
         style={[styles.payBtn, isLoading && styles.payBtnDisabled]} 
@@ -69,7 +90,7 @@ export default function PaymentScreen({ route, navigation }) {
         disabled={isLoading}
       >
         {isLoading ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color="#000" />
         ) : (
           <Text style={styles.payBtnText}>PAY SECURELY</Text>
         )}
@@ -79,18 +100,18 @@ export default function PaymentScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f9fafb' },
+  container: { flex: 1, backgroundColor: '#050505' },
   content: { padding: 24 },
-  card: { backgroundColor: '#fff', padding: 24, borderRadius: 16, elevation: 3, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, marginBottom: 32, alignItems: 'center' },
-  totalLabel: { color: '#6b7280', fontWeight: 'bold', letterSpacing: 1 },
-  totalAmount: { fontSize: 40, fontWeight: '900', color: '#3f51b5', marginVertical: 8 },
-  divider: { height: 1, backgroundColor: '#e5e7eb', width: '100%', marginVertical: 16 },
+  card: { backgroundColor: 'rgba(255,255,255,0.05)', padding: 24, borderRadius: 20, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', marginBottom: 32, alignItems: 'center' },
+  totalLabel: { color: '#9ca3af', fontWeight: 'bold', letterSpacing: 1 },
+  totalAmount: { fontSize: 40, fontWeight: '900', color: '#06b6d4', marginVertical: 8 },
+  divider: { height: 1, backgroundColor: 'rgba(255,255,255,0.1)', width: '100%', marginVertical: 16 },
   row: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginBottom: 8 },
-  rowLabel: { color: '#4b5563' },
-  rowValue: { fontWeight: 'bold', color: '#1f2937' },
-  inputLabel: { fontSize: 14, fontWeight: 'bold', color: '#374151', marginBottom: 8 },
-  input: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#d1d5db', borderRadius: 12, padding: 16, marginBottom: 20, fontSize: 16 },
-  payBtn: { backgroundColor: '#16a34a', padding: 18, borderRadius: 12, alignItems: 'center', marginTop: 16 },
+  rowLabel: { color: '#9ca3af' },
+  rowValue: { fontWeight: 'bold', color: '#fff' },
+  inputLabel: { fontSize: 12, fontWeight: 'bold', color: '#9ca3af', marginBottom: 8, letterSpacing: 1 },
+  input: { backgroundColor: 'rgba(255,255,255,0.03)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', borderRadius: 12, padding: 16, marginBottom: 20, fontSize: 16, color: '#fff' },
+  payBtn: { backgroundColor: '#06b6d4', padding: 18, borderRadius: 12, alignItems: 'center', marginTop: 16 },
   payBtnDisabled: { opacity: 0.7 },
-  payBtnText: { color: '#fff', fontSize: 16, fontWeight: 'bold', letterSpacing: 1 },
+  payBtnText: { color: '#000', fontSize: 16, fontWeight: '900', letterSpacing: 1 },
 });
