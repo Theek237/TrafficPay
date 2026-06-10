@@ -9,25 +9,32 @@ export default function IssueFineScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [districts, setDistricts] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+
   useEffect(() => {
-    fetchCategories();
+    fetchData();
   }, []);
 
-  const fetchCategories = async () => {
+  const fetchData = async () => {
     setIsLoading(true);
     try {
-      const data = await apiService.getCategories();
-      setCategories(data);
+      const [catsData, distsData] = await Promise.all([
+        apiService.getCategories(),
+        apiService.getDistricts()
+      ]);
+      setCategories(catsData);
+      setDistricts(distsData);
     } catch (e) {
-      Alert.alert('Error', 'Failed to fetch categories');
+      Alert.alert('Error', 'Failed to fetch initial data');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleIssue = async () => {
-    if (!vehicleNo || !selectedCategory) {
-      Alert.alert('Error', 'Please enter vehicle number and select a category');
+    if (!vehicleNo || !selectedCategory || !selectedDistrict) {
+      Alert.alert('Error', 'Please enter vehicle number, and select both a district and a category');
       return;
     }
 
@@ -36,6 +43,7 @@ export default function IssueFineScreen({ navigation }) {
       const data = {
         vehicleNo: vehicleNo.trim(),
         categoryId: selectedCategory._id,
+        districtId: selectedDistrict._id,
       };
       const result = await apiService.issueFine(data);
       Alert.alert(
@@ -62,6 +70,28 @@ export default function IssueFineScreen({ navigation }) {
           onChangeText={setVehicleNo}
           autoCapitalize="characters"
         />
+
+        <Text style={styles.label}>POLICE DISTRICT</Text>
+        {isLoading ? (
+          <ActivityIndicator color="#3b82f6" />
+        ) : (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll} contentContainerStyle={styles.horizontalList}>
+            {districts.map((dist) => {
+              const isSelected = selectedDistrict?._id === dist._id;
+              return (
+                <TouchableOpacity
+                  key={dist._id}
+                  style={[styles.chip, isSelected && styles.chipSelected]}
+                  onPress={() => setSelectedDistrict(dist)}
+                >
+                  <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
+                    {dist.name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        )}
 
         <Text style={styles.label}>OFFENSE CATEGORY</Text>
         {isLoading ? (
@@ -111,6 +141,12 @@ const styles = StyleSheet.create({
   scroll: { padding: 24, paddingBottom: 100 },
   label: { fontSize: 12, fontWeight: 'bold', color: '#9ca3af', marginBottom: 8, letterSpacing: 1 },
   input: { backgroundColor: 'rgba(255,255,255,0.03)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', borderRadius: 12, padding: 16, marginBottom: 24, fontSize: 16, color: '#fff' },
+  horizontalScroll: { marginBottom: 24 },
+  horizontalList: { gap: 12 },
+  chip: { backgroundColor: 'rgba(255,255,255,0.05)', paddingHorizontal: 20, paddingVertical: 12, borderRadius: 20, borderWidth: 1, borderColor: 'transparent' },
+  chipSelected: { borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.1)' },
+  chipText: { color: '#9ca3af', fontWeight: 'bold' },
+  chipTextSelected: { color: '#3b82f6' },
   categoriesList: { gap: 12 },
   catCard: { 
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', 
