@@ -16,7 +16,7 @@ export default function IssueFineScreen({ navigation }) {
   const fetchCategories = async () => {
     setIsLoading(true);
     try {
-      const data = await apiService.getFineCategories();
+      const data = await apiService.getCategories();
       setCategories(data);
     } catch (e) {
       Alert.alert('Error', 'Failed to fetch categories');

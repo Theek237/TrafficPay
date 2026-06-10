@@ -24,9 +24,11 @@ services:
     environment:
       - PORT=5001
       - NODE_ENV=production
-      - MONGO_URI=mongodb+srv://theenuka:theenuka123@cluster0.sfzhqxr.mongodb.net/traffic_pay?retryWrites=true&w=majority
+      - MONGO_URI=mongodb://mongodb:27017/traffic_pay
       - JWT_SECRET=supersecretjwtkey12345
       - JWT_EXPIRES=24h
+    depends_on:
+      - mongodb
 
   fines-service:
     build: ./fines-service
@@ -36,8 +38,10 @@ services:
     environment:
       - PORT=5002
       - NODE_ENV=production
-      - MONGO_URI=mongodb+srv://theenuka:theenuka123@cluster0.sfzhqxr.mongodb.net/traffic_pay?retryWrites=true&w=majority
+      - MONGO_URI=mongodb://mongodb:27017/traffic_pay
       - JWT_SECRET=supersecretjwtkey12345
+    depends_on:
+      - mongodb
 
   payments-service:
     build: ./payments-service
@@ -47,8 +51,16 @@ services:
     environment:
       - PORT=5003
       - NODE_ENV=production
-      - MONGO_URI=mongodb+srv://theenuka:theenuka123@cluster0.sfzhqxr.mongodb.net/traffic_pay?retryWrites=true&w=majority
+      - MONGO_URI=mongodb://mongodb:27017/traffic_pay
       - JWT_SECRET=supersecretjwtkey12345
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: trafficpay-mongodb
+    ports:
+      - "27017:27017"
 
   web-portal:
     build: ./web-portal
