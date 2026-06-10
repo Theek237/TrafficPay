@@ -61,6 +61,17 @@ class ApiService {
     }
   }
 
+  // Fines: Get My Issued Fines (Officer)
+  async getMyFines() {
+    try {
+      const headers = await this._getHeaders(true);
+      const res = await axios.get(`${AppConstants.apiUrl}/fines`, { headers });
+      return res.data.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || error.message || 'Failed to load fines');
+    }
+  }
+
   // Fines: Issue New Fine (Officer)
   async issueFine(payload) {
     try {
