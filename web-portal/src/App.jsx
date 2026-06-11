@@ -8,6 +8,9 @@ const Lookup = lazy(() => import('./pages/Lookup'));
 const Login = lazy(() => import('./pages/admin/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const Network = lazy(() => import('./pages/Network'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const ContactSupport = lazy(() => import('./pages/ContactSupport'));
 
 function App() {
   const location = useLocation();
@@ -79,6 +82,9 @@ function App() {
               <Route path="/network" element={<Network />} />
               <Route path="/admin/login" element={<Login />} />
               <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/contact-support" element={<ContactSupport />} />
             </Routes>
           </Suspense>
         </AnimatePresence>
@@ -89,9 +95,9 @@ function App() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p>© 2026 Smart Traffic Network Solutions. Encrypted & Secure.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Contact Support</a>
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="/contact-support" className="hover:text-white transition-colors">Contact Support</Link>
           </div>
         </div>
       </footer>
