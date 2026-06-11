@@ -42,7 +42,7 @@ The backend relies on the **API Gateway Pattern** to securely marshal network tr
 
 ## 💻 Technology Stack
 
-### 🌐 Frontend (Web Portal)
+### 🌐 Frontend (Web Portals)
 - **Framework**: React 19 (Vite)
 - **Styling**: Tailwind CSS v4
 - **Animations**: Framer Motion (Hardware-accelerated)
@@ -86,10 +86,11 @@ Open your terminal in the root directory and build the containers:
 ```bash
 docker-compose up --build
 ```
-> **Note**: This spins up the API Gateway, Auth, Fines, Payments, and Web Portal simultaneously in isolated containers.
+> **Note**: This spins up the API Gateway, Auth, Fines, Payments, Driver Portal, and Admin Portal simultaneously in isolated containers.
 
 ### 3. Access the Platforms
-- 🖥️ **Web Portal**: Navigate to `http://localhost:5173`
+- 🖥️ **Driver Portal**: Navigate to `http://localhost:5173`
+- 🛡️ **Admin Portal**: Navigate to `http://localhost:5174`
 - 📡 **API Gateway**: Listening on `http://localhost:5005`
 
 ### 4. Boot the Mobile App (Optional)
