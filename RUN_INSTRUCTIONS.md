@@ -17,7 +17,8 @@ docker-compose up --build
 ```
 
 **Accessing Services:**
-- **Web Portal:** `http://localhost:5173`
+- **Driver Portal (Public):** `http://localhost:5173`
+- **Admin Portal (Dashboard):** `http://localhost:5174`
 - **API Gateway:** `http://localhost:5005`
 
 To stop the services:
