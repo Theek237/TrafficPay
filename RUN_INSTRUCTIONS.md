@@ -27,26 +27,8 @@ docker-compose down
 
 ---
 
-## 2. Running the Flutter Mobile App (Officers App)
 
-The `mobile-app` directory contains the Flutter mobile application.
-
-**Prerequisites:**
-- Ensure the [Flutter SDK](https://flutter.dev/docs/get-started/install) is installed.
-- Ensure an Android Emulator or iOS Simulator is running, or a physical device is connected.
-
-**Commands:**
-Open a new terminal window, navigate to the `mobile-app` directory, and run:
-
-```bash
-cd mobile-app
-flutter pub get
-flutter run
-```
-
----
-
-## 3. Running the React Native Mobile App (Alternative)
+## 2. Running the React Native Mobile App
 
 The `mobile-app-rn` directory contains an alternative React Native application (using Expo).
 
