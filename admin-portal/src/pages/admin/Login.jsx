@@ -29,7 +29,7 @@ export default function Login() {
       localStorage.setItem('traffic_user', JSON.stringify(data.data.user));
       
       // Navigate to dashboard
-      navigate('/admin/dashboard');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
     } finally {
