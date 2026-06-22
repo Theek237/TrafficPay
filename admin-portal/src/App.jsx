@@ -3,14 +3,8 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Shield, Activity, Menu, X } from 'lucide-react';
 
-const Home = lazy(() => import('./pages/Home'));
-const Lookup = lazy(() => import('./pages/Lookup'));
 const Login = lazy(() => import('./pages/admin/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
-const Network = lazy(() => import('./pages/Network'));
-const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const TermsOfService = lazy(() => import('./pages/TermsOfService'));
-const ContactSupport = lazy(() => import('./pages/ContactSupport'));
 
 function App() {
   const location = useLocation();
@@ -38,10 +32,7 @@ function App() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-            <Link to="/" className="hover:text-white transition-colors">Home</Link>
-            <Link to="/lookup" className="hover:text-white transition-colors">Fine Lookup</Link>
-            <Link to="/network" className="hover:text-white transition-colors">Smart City Network</Link>
-            <Link to="/admin/login" className="hover:text-white transition-colors">Admin Portal</Link>
+            <Link to="/dashboard" className="hover:text-white transition-colors">Admin Portal</Link>
             <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
               <span>System Operational</span>
@@ -60,9 +51,7 @@ function App() {
         {isMenuOpen && (
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="fixed inset-0 z-40 bg-[#050505]/95 backdrop-blur-3xl pt-24 px-6 md:hidden">
             <div className="flex flex-col gap-6 text-xl font-medium">
-              <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
-              <Link to="/lookup" onClick={() => setIsMenuOpen(false)}>Fine Lookup</Link>
-              <Link to="/network" onClick={() => setIsMenuOpen(false)}>Smart City Network</Link>
+              <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>Admin Portal</Link>
             </div>
           </motion.div>
         )}
@@ -77,14 +66,9 @@ function App() {
             </div>
           }>
             <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Home />} />
-              <Route path="/lookup" element={<Lookup />} />
-              <Route path="/network" element={<Network />} />
-              <Route path="/admin/login" element={<Login />} />
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
-              <Route path="/contact-support" element={<ContactSupport />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
           </Suspense>
         </AnimatePresence>
@@ -95,9 +79,9 @@ function App() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p>© 2026 Smart Traffic Network Solutions. Encrypted & Secure.</p>
           <div className="flex gap-6">
-            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link to="/contact-support" className="hover:text-white transition-colors">Contact Support</Link>
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Contact Support</a>
           </div>
         </div>
       </footer>
