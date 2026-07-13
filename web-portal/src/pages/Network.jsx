@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Activity, Radio, Wifi, Zap, Server, ShieldCheck } from 'lucide-react';
 
 export default function Network() {
+  const navigate = useNavigate();
   const pageTransition = {
     initial: { opacity: 0, scale: 0.98, filter: 'blur(5px)' },
     animate: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 0.3, ease: "easeOut" } },
@@ -27,7 +29,11 @@ export default function Network() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-semibold uppercase tracking-wider mb-6"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-semibold uppercase tracking-wider mb-6 cursor-pointer"
+          onClick={() => navigate('/network/live-uplink-activities')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') navigate('/network/live-uplink-activities'); }}
         >
           <Radio className="w-4 h-4 animate-pulse" /> Live Uplink Active
         </motion.div>

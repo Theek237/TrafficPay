@@ -8,6 +8,7 @@ const Lookup = lazy(() => import('./pages/Lookup'));
 const Login = lazy(() => import('./pages/admin/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const Network = lazy(() => import('./pages/Network'));
+const LiveUplinkActivities = lazy(() => import('./pages/LiveUplinkActivities'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const ContactSupport = lazy(() => import('./pages/ContactSupport'));
@@ -80,6 +81,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/lookup" element={<Lookup />} />
               <Route path="/network" element={<Network />} />
+              <Route path="/network/live-uplink-activities" element={<LiveUplinkActivities />} />
               <Route path="/admin/login" element={<Login />} />
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
