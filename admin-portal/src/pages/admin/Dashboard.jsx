@@ -53,7 +53,7 @@ export default function Dashboard() {
     const user = JSON.parse(localStorage.getItem('traffic_user') || 'null');
 
     if (!token || user?.role !== 'ADMIN') {
-      navigate('/admin/login');
+      navigate('/login');
       return;
     }
 
@@ -63,7 +63,7 @@ export default function Dashboard() {
   const handleLogout = () => {
     localStorage.removeItem('traffic_token');
     localStorage.removeItem('traffic_user');
-    navigate('/admin/login');
+    navigate('/login');
   };
 
   const openCreateModal = () => {
